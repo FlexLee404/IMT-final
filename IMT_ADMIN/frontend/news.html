@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News Management</title>
+</head>
+<body>
+  <h1>News Management</h1>
+
+  <h2 id="formTitle">Add News</h2>
+  <form id="newsForm">
+    <label for="newsTitle">Title:</label>
+    <input type="text" id="newsTitle" required />
+    <br />
+
+    <label for="newsDescription">Description:</label>
+    <textarea id="newsDescription" required></textarea>
+    <br />
+
+    <label for="newsDate">Date:</label>
+    <input type="date" id="newsDate" required />
+    <br />
+
+    <label for="imageInput">Image:</label>
+    <input type="file" id="imageInput" accept="image/*" />
+    <div id="imagePreview"></div>
+    <br />
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <h2>Search News</h2>
+  <input type="text" id="searchInput" placeholder="Search..." />
+  <button id="searchButton">Search</button>
+
+  <h2>News List</h2>
+  <ul id="newsList"></ul>
+
+  <script src="news.js"></script>
+</body>
+</html>

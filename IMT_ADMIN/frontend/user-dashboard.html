@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>User Dashboard</h2>
+        <nav>
+            <ul>
+                <li><a href="#profile">Profile</a></li>
+                <li><a href="#applications">Applications</a></li>
+                <li><a href="logout.html">Logout</a></li>
+            </ul>
+        </nav>
+
+        <section id="profile">
+            <h3>Your Profile</h3>
+            <p>Email: <span id="userEmail"></span></p>
+            <p>Account created: <span id="accountCreated"></span></p>
+        </section>
+
+        <section id="news">
+            <h3>Latest News</h3>
+            <div id="newsList"></div>
+        </section>
+
+        <section id="galleries">
+            <h3>Galleries</h3>
+            <div id="galleryList"></div>
+        </section>
+
+        <section id="courses">
+            <h3>Courses</h3>
+            <div id="courseList"></div>
+        </section>
+
+        <section id="applications">
+            <h3>Your Applications</h3>
+            <div id="applicationList"></div>
+            <button id="applyBtn">Apply Now</button>
+        </section>
+    </div>
+
+    <script>
+        const userEmail = 'user@example.com'; 
+        document.getElementById('userEmail').innerText = userEmail;
+        document.getElementById('accountCreated').innerText = '01-Jan-2025'; 
+        function loadNews() {
+            fetch('http://localhost:3000/api/news')
+                .then(response => response.json())
+                .then(data => {
+                    const newsList = document.getElementById('newsList');
+                    if (data.success) {
+                        newsList.innerHTML = data.news.length > 0
+                            ? data.news.map(news => `<p>${news.title}: ${news.content}</p>`).join('')
+                            : '<p>No news available.</p>';
+                    }
+                });
+        }
+
+        function loadGalleries() {
+            fetch('http://localhost:3000/api/galleries')
+                .then(response => response.json())
+                .then(data => {
+                    const galleryList = document.getElementById('galleryList');
+                    if (data.success) {
+                        galleryList.innerHTML = data.galleries.length > 0
+                            ? data.galleries.map(gallery => `<p>${gallery.name}: <img src="${gallery.imageUrl}" alt="${gallery.name}" width="200"></p>`).join('')
+                            : '<p>No galleries available.</p>';
+                    }
+                });
+        }
+
+        function loadCourses() {
+            fetch('http://localhost:3000/api/courses')
+                .then(response => response.json())
+                .then(data => {
+                    const courseList = document.getElementById('courseList');
+                    if (data.success) {
+                        courseList.innerHTML = data.courses.length > 0
+                            ? data.courses.map(course => `<p>${course.title}: ${course.description}</p>`).join('')
+                            : '<p>No courses available.</p>';
+                    }
+                });
+        }
+
+        function loadApplications() {
+            fetch(`http://localhost:3000/api/applications?email=${userEmail}`)
+                .then(response => response.json())
+                .then(data => {
+                    const applicationList = document.getElementById('applicationList');
+                    applicationList.innerHTML = data.success
+                        ? data.applications.length > 0
+                            ? data.applications.map(app => `<p>${app}</p>`).join('')
+                            : '<p>No applications yet.</p>'
+                        : '<p>Error loading applications.</p>';
+                });
+        }
+
+        window.onload = () => {
+            loadNews();
+            loadGalleries();
+            loadCourses();
+            loadApplications();
+        };
+
+        document.getElementById('applyBtn').addEventListener('click', () => {
+            const applicationData = prompt('Enter your application details:');
+            if (applicationData) {
+                fetch('http://localhost:3000/api/applications', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: userEmail, applicationData })
+                }).then(response => response.json())
+                  .then(data => {
+                      if (data.success) {
+                          alert('Application submitted successfully!');
+                          loadApplications();
+                      }
+                  });
+            } else {
+                alert('Application details are required.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Management</title>
+  <style>
+    /* General reset */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      color: #333;
+      background: url('./img/photo_2025-01-22_09-36-42.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0056b3;
+      margin-top: 20px;
+    }
+
+    /* Page layout with flexbox */
+    .container {
+      display: flex;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    /* Left Column: Form */
+    #courseForm {
+      flex: 1;
+      background: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      padding: 25px 40px;
+      border-radius: 8px;
+    }
+
+    #courseForm input,
+    #courseForm textarea {
+      width: 100%;
+      padding: 10px 15px;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      transition: border-color 0.3s;
+    }
+
+    #courseForm input:focus,
+    #courseForm textarea:focus {
+      border-color: #0056b3;
+      outline: none;
+    }
+
+    #courseForm button {
+      width: 100%;
+      padding: 10px 15px;
+      font-size: 1rem;
+      background: #0056b3;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #courseForm button:hover {
+      background: #003f80;
+    }
+
+    /* Right Column: Added Courses */
+    .added-courses {
+      flex: 1;
+      background: #f9f9f9;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border-radius: 8px;
+      overflow-y: auto;
+      max-height: 600px; /* Ensures it doesn't overflow */
+    }
+
+    .added-courses h2 {
+      text-align: center;
+      color: #0056b3;
+    }
+
+    #coursesList {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    #coursesList li {
+      background: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    /* Logout Button */
+    #logoutButton {
+      display: block;
+      width: 200px;
+      margin: 20px auto;
+      padding: 10px;
+      font-size: 1rem;
+      background: #ff4d4d;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #logoutButton:hover {
+      background: #cc0000;
+    }
+
+    /* Links */
+    a {
+      display: block;
+      text-align: center;
+      margin: 20px auto;
+      color: #0056b3;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Course Management</h1>
+  
+  <div class="container">
+    <!-- Left Column: Form -->
+    <form id="courseForm">
+      <h1>Add courses</h1>
+      <input type="text" id="courseTitle" placeholder="Course Title" required />
+      <textarea id="courseDescription" placeholder="Course Description" required></textarea>
+      <input type="number" id="courseDuration" placeholder="Duration (hours)" required />
+      <input type="file" id="imageInput" />
+      <div id="imagePreview"></div>
+      <button type="submit">Submit</button>
+    </form>
+
+    <!-- Right Column: Added Courses -->
+    <div class="added-courses">
+      <h2>Added Courses</h2>
+      <ul id="coursesList">
+        <!-- Dynamic course list will be added here -->
+      </ul>
+    </div>
+  </div>
+
+  <a href="./news.html">News</a>
+  <button id="logoutButton">Logout</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
